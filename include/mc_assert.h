@@ -6,18 +6,23 @@
 #if !defined __MC_ASSERT_H__
 # define __MC_ASSERT_H__
 
-#define ASSERT_BREAK(t, fmt, ... ) ({ \
+#define __ASSERT__(l, a, t, fmt, ... ) ({ \
     if (!(t)) { \
-        ESP_LOGW(__func__, fmt, ##__VA_ARGS__); \
-        break; \
+        l(__func__, fmt, ##__VA_ARGS__); \
+        a; \
     } \
 })
 
-#define ASSERT_RET(t, r, fmt, ... ) ({ \
-    if (!(t)) { \
-        ESP_LOGW(__func__, fmt, ##__VA_ARGS__); \
-        return r; \
-    } \
-})
+#define ASSERTW_BRK(t, fmt, ... ) \
+    __ASSERT__(ESP_LOGW, break, t, fmt, ##__VA_ARGS__)
+
+#define ASSERTE_BRK(t, fmt, ... ) \
+    __ASSERT__(ESP_LOGE, break, t, fmt, ##__VA_ARGS__)
+
+#define ASSERTW_RET(t, r, fmt, ... ) \
+    __ASSERT__(ESP_LOGW, return r, t, fmt, ##__VA_ARGS__)
+
+#define ASSERTE_RET(t, r, fmt, ... ) \
+    __ASSERT__(ESP_LOGE, return r, t, fmt, ##__VA_ARGS__)
 
 #endif // !__MC_ASSERT_H__
