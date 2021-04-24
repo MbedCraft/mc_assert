@@ -3,8 +3,9 @@
  * Use of this source code is governed by a MIT license that can be found with this software.
  */
 
-#if !defined __MC_ASSERT_H__
-# define __MC_ASSERT_H__
+#pragma once
+
+#include "esp_log.h"
 
 #define __ASSERT__(l, a, t, fmt, ... ) ({ \
     if (!(t)) { \
@@ -24,5 +25,3 @@
 
 #define ASSERTE_RET(t, r, fmt, ... ) \
     __ASSERT__(ESP_LOGE, return r, t, fmt, ##__VA_ARGS__)
-
-#endif // !__MC_ASSERT_H__
